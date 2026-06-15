@@ -18,7 +18,7 @@ Features: 21 columns
 ## Google Colab Notebook
 
 Colab Link:
-[https://colab.research.google.com/drive/1W_fZ6K0hR_Ge0kylzZhd3RXuiq_urYld]
+https://colab.research.google.com/drive/1W_fZ6K0hR_Ge0kylzZhd3RXuiq_urYld
 
 ## Key Findings
 
