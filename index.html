@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Performance Analysis | Nico Alfianto</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e1a; --card:#111827; --card2:#1f2937; --text:#f9fafb; --muted:#9ca3af; 
+  --accent:#3b82f6; --accent2:#2563eb; --success:#22c55e; --warning:#f59e0b; --danger:#ef4444;
+}
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body { background: var(--bg); color: var(--text); }
+.container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  padding: 40px; border-radius: 20px; margin-bottom: 25px;
+  box-shadow: 0 10px 40px rgba(59,130,246,0.3);
+}
+.header h1 { font-size: 32px; font-weight: 800; }
+.header p { color: #dbeafe; margin-top: 8px; }
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 25px;
+}
+.kpi-card {
+  background: linear-gradient(135deg, #1e3a8a, #1f2937); padding: 25px; border-radius: 16px;
+  border: 1px solid #1e40af;
+}
+.kpi-card h3 { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+.kpi-card .value { font-size: 32px; font-weight: 800; margin: 10px 0; }
+.kpi-card .value.green { color: var(--success); }
+.kpi-card .value.blue { color: var(--accent); }
+.kpi-card .sub { font-size: 12px; color: var(--muted); }
+
+/* SECTION */
+.section { background: var(--card); padding: 30px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.section h2 { font-size: 24px; color: var(--accent); margin-bottom: 15px; font-weight: 700; }
+.section h3 { font-size: 18px; color: var(--accent2); margin: 20px 0 10px; }
+
+/* CHART GRID */
+.chart-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 20px;
+}
+.chart-card {
+  background: #0f172a; padding: 20px; border-radius: 12px; border: 1px solid #374151;
+}
+.chart-card h4 { color: var(--accent); margin-bottom: 15px; text-align: center; }
+
+/* TABLE */
+.table { width:100%; border-collapse: collapse; margin-top:15px; font-size:13px; }
+.table th { background: var(--card2); padding:12px; text-align:left; color: var(--accent); }
+.table td { padding:12px; border-bottom: 1px solid #374151; }
+.table .profit-high { color: var(--success); font-weight: 600; }
+.table .profit-low { color: var(--danger); font-weight: 600; }
+
+/* INSIGHT BOX */
+.insight-box {
+  background: linear-gradient(135deg, #1e3a8a, #1f2937); padding: 20px; border-radius: 12px;
+  border-left: 4px solid var(--accent); margin: 15px 0;
+}
+.insight-box.warning { border-left-color: var(--warning); }
+.insight-box.danger { border-left-color: var(--danger); }
+
+/* BUTTON */
+.btn {
+  background: linear-gradient(90deg, var(--accent), var(--accent2)); color:white; padding:12px 24px;
+  border-radius:10px; text-decoration:none; font-weight:700; display:inline-block; border: none; cursor: pointer;
+  margin-top: 15px;
+}
+</style>
+</head>
+<body>
+
+<div id="dashboard-to-pdf">
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Sales Performance Analysis</h1>
+    <p>Superstore Dataset | Driving Profitability Through Data</p>
+    <button class="btn" onclick="downloadPDF()">Download Executive Report PDF</button>
+  </div>
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <h3>Total Sales</h3>
+      <div class="value blue">$2,297,200.86</div>
+      <div class="sub">9,994 Transactions | 4 Years</div>
+    </div>
+    <div class="kpi-card">
+      <h3>Total Profit</h3>
+      <div class="value green">$286,397.02</div>
+      <div class="sub">Overall Margin: 12.47%</div>
+    </div>
+    <div class="kpi-card">
+      <h3>Top Category</h3>
+      <div class="value blue">Technology</div>
+      <div class="sub">$836K Sales | $145K Profit</div>
+    </div>
+    <div class="kpi-card">
+      <h3>Top Region</h3>
+      <div class="value green">West</div>
+      <div class="sub">$725K Sales Revenue</div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section">
+    <h2>Project Overview</h2>
+    <p>This project analyzes Superstore retail data to identify sales trends, profitability drivers, and regional performance gaps. The main objective: transform raw transaction data into business insights that support data-driven decisions.</p>
+  </div>
+
+  <!-- KEY FINDINGS -->
+  <div class="section">
+    <h2>Key Findings</h2>
+    <div class="insight-box">
+      <h4>Category Performance</h4>
+      <p><b>Technology:</b> Highest sales revenue & profit. Clear winner.</p>
+      <p><b>Office Supplies:</b> Strong profitability with healthy margins.</p>
+      <p><b>Furniture:</b> High sales volume but relatively low profit. Potential margin issue.</p>
+    </div>
+    <div class="insight-box warning">
+      <h4>Regional Performance</h4>
+      <p><b>West Region:</b> Highest sales revenue. Key growth driver.</p>
+      <p><b>South Region:</b> Lowest sales revenue. Needs strategic attention.</p>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="section">
+    <h2>Data Visualization</h2>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h4>Sales by Category</h4>
+        <canvas id="salesCategoryChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h4>Profit by Category</h4>
+        <canvas id="profitCategoryChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h4>Sales by Region</h4>
+        <canvas id="salesRegionChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAILED ANALYSIS -->
+  <div class="section">
+    <h2>Detailed Analysis</h2>
+    <h3>Sales by Category</h3>
+    <table class="table">
+      <tr><th>Category</th><th>Sales</th><th>Profit</th><th>Margin</th></tr>
+      <tr><td>Technology</td><td>$836,154.03</td><td class="profit-high">$145,454.95</td><td class="profit-high">17.4%</td></tr>
+      <tr><td>Furniture</td><td>$741,999.80</td><td class="profit-low">$18,451.27</td><td class="profit-low">2.5%</td></tr>
+      <tr><td>Office Supplies</td><td>$719,047.03</td><td class="profit-high">$122,490.80</td><td class="profit-high">17.0%</td></tr>
+    </table>
+
+    <h3>Sales by Region</h3>
+    <table class="table">
+      <tr><th>Region</th><th>Sales</th><th>Status</th></tr>
+      <tr><td>West</td><td>$725,457.82</td><td class="profit-high">Top Performer</td></tr>
+      <tr><td>East</td><td>$678,781.24</td><td class="profit-high">Strong</td></tr>
+      <tr><td>Central</td><td>$501,239.89</td><td>Medium</td></tr>
+      <tr><td>South</td><td>$391,721.91</td><td class="profit-low">Needs Attention</td></tr>
+    </table>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="section">
+    <h2>Business Recommendations</h2>
+    <ul style="list-style: none; padding-left: 0;">
+      <li style="margin-bottom: 15px;">1. <b>Double Down on Technology:</b> Expand product offerings and marketing spend to maximize revenue and profit.</li>
+      <li style="margin-bottom: 15px;">2. <b>Fix Furniture Margins:</b> Review pricing, discount strategies, and operational costs. High sales ≠ high profit.</li>
+      <li style="margin-bottom: 15px;">3. <b>Boost the South Region:</b> Strengthen marketing and sales initiatives to close the revenue gap.</li>
+      <li style="margin-bottom: 15px;">4. <b>Invest in Winners:</b> Continue investing in West and East regions to sustain growth.</li>
+      <li style="margin-bottom: 15px;">5. <b>Track Profitability:</b> Monitor category-level profit margins monthly for sustainable growth.</li>
+    </ul>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <h2>Tech Stack</h2>
+    <p>Python | Pandas | Matplotlib | Seaborn | Google Colab</p>
+  </div>
+
+  <!-- AUTHOR -->
+  <div class="section">
+    <h2>Author</h2>
+    <p><b>Nico Alfianto</b></p>
+    <p>Information Systems Student | Data Analyst Portfolio Project</p>
+  </div>
+
+  <div style="text-align:center; color:var(--muted); margin:40px 0;">
+    <p>Sales Performance Analysis 2026</p>
+  </div>
+</div>
+</div>
+
+<script>
+// Sales by Category
+new Chart(document.getElementById('salesCategoryChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Technology', 'Furniture', 'Office Supplies'],
+    datasets: [{
+      label: 'Sales ($)',
+      data: [836154.03, 741999.80, 719047.03],
+      backgroundColor: '#3b82f6'
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } }
+});
+
+// Profit by Category
+new Chart(document.getElementById('profitCategoryChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Technology', 'Office Supplies', 'Furniture'],
+    datasets: [{
+      label: 'Profit ($)',
+      data: [145454.95, 122490.80, 18451.27],
+      backgroundColor: ['#22c55e','#22c55e','#ef4444']
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } } }
+});
+
+// Sales by Region
+new Chart(document.getElementById('salesRegionChart'), {
+  type: 'bar',
+  data: {
+    labels: ['West', 'East', 'Central', 'South'],
+    datasets: [{
+      label: 'Sales ($)',
+      data: [725457.82, 678781.24, 501239.89, 391721.91],
+      backgroundColor: '#3b82f6'
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } } }
+});
+
+function downloadPDF() {
+  const element = document.getElementById('dashboard-to-pdf');
+  const opt = {
+    margin: 10,
+    filename: 'Sales_Performance_Analysis_NicoAlfianto.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+  html2pdf().set(opt).from(element).save();
+}
+</script>
+</body>
+</html>
