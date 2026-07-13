@@ -53,6 +53,14 @@ body { background: var(--bg); color: var(--text); }
 }
 .chart-card h4 { color: var(--accent); margin-bottom: 15px; text-align: center; }
 
+/* TAMBAHAN STYLE UNTUK GAMBAR */
+.chart-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 15px;
+  border: 1px solid #374151;
+}
+
 /* TABLE */
 .table { width:100%; border-collapse: collapse; margin-top:15px; font-size:13px; }
 .table th { background: var(--card2); padding:12px; text-align:left; color: var(--accent); }
@@ -140,15 +148,17 @@ body { background: var(--bg); color: var(--text); }
       <div class="chart-card">
         <h4>Sales by Category</h4>
         <canvas id="salesCategoryChart"></canvas>
-        <img src="images/1.png" alt="Sales by Category" />
+        <img src="images/1.png" alt="Sales by Category Visualization" />
       </div>
       <div class="chart-card">
         <h4>Profit by Category</h4>
         <canvas id="profitCategoryChart"></canvas>
+        <img src="images/2.png" alt="Profit by Category Visualization" />
       </div>
       <div class="chart-card">
         <h4>Sales by Region</h4>
         <canvas id="salesRegionChart"></canvas>
+        <img src="images/3.png" alt="Sales by Region Visualization" />
       </div>
     </div>
   </div>
@@ -217,7 +227,7 @@ new Chart(document.getElementById('salesCategoryChart'), {
       backgroundColor: '#3b82f6'
     }]
   },
-  options: { responsive: true, plugins: { legend: { display: false } }
+  options: { responsive: true, plugins: { legend: { display: false } } }
 });
 
 // Profit by Category
@@ -261,4 +271,4 @@ function downloadPDF() {
 }
 </script>
 </body>
-</html>
+  </html>
